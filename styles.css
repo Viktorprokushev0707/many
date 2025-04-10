@@ -51,6 +51,23 @@ input[type="text"] {
   font-size: 16px; /* Предотвращает масштабирование на iOS */
 }
 
+/* Стили для поля ввода даты */
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
 button {
   background-color: var(--tg-theme-button-color, #3390ec);
   color: var(--tg-theme-button-text-color, #fff);
@@ -152,7 +169,6 @@ li {
 .expense-input button {
   width: 100%;
 }
-
 /* u0421u0442u0438u043bu0438 u0434u043bu044f u043eu0442u043eu0431u0440u0430u0436u0435u043du0438u044f u043eu0448u0438u0431u043eu043a u0432u0432u043eu0434u0430 */
 .input-error {
   border-color: #f44336 !important;
@@ -166,7 +182,6 @@ li {
   margin-bottom: 10px;
   display: block;
 }
-
 .header-buttons {
   display: flex;
   justify-content: space-between;
