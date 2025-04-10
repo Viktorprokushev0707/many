@@ -83,11 +83,31 @@ button:disabled {
   margin: 0 5px;
 }
 
+/* Основные стили для таблиц */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
   background-color: var(--tg-theme-secondary-bg-color, #fff);
+}
+
+/* Обертка для таблицы месяцев - добавляет горизонтальную прокрутку */
+.month-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 15px;
+  scrollbar-width: thin; /* Тонкий скроллбар для Firefox */
+}
+
+/* Стили для скроллбара в WebKit браузерах */
+.month-table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.month-table-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 
 table th, table td {
@@ -131,6 +151,20 @@ li {
 
 .expense-input button {
   width: 100%;
+}
+
+/* u0421u0442u0438u043bu0438 u0434u043bu044f u043eu0442u043eu0431u0440u0430u0436u0435u043du0438u044f u043eu0448u0438u0431u043eu043a u0432u0432u043eu0434u0430 */
+.input-error {
+  border-color: #f44336 !important;
+  background-color: rgba(244, 67, 54, 0.05) !important;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 0.8em;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 .header-buttons {
@@ -197,14 +231,64 @@ li {
   font-size: 0.8em;
 }
 
+/* Медиа-запросы для адаптивности */
 @media (max-width: 480px) {
   .container {
     padding: 10px;
     border-radius: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
+  /* Стили для адаптивной таблицы на мобильных устройствах */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+    scrollbar-width: thin;
+  }
+  
+  /* Стили для скроллбара в WebKit браузерах */
+  .table-container::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .table-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+  
+  /* Оборачиваем все таблицы в контейнер для горизонтальной прокрутки */
   table {
-    font-size: 0.9em;
+    font-size: 0.85em;
+    min-width: 100%;
+    table-layout: auto; /* Изменено с fixed на auto для лучшей адаптивности */
+    width: 100%;
+  }
+  
+  table th, table td {
+    padding: 6px 4px;
+    word-break: break-word;
+    white-space: nowrap; /* Предотвращает перенос текста в ячейках */
+    font-size: 0.9em; /* Уменьшаем размер текста для мобильных устройств */
+  }
+  
+  /* Удаляем фиксированные ширины для более гибкого отображения */
+  table th:first-child, table td:first-child {
+    width: auto;
+    min-width: 40px;
+  }
+  
+  table th:last-child, table td:last-child {
+    width: auto;
+    min-width: 60px;
+  }
+  
+  table th:not(:first-child):not(:last-child), 
+  table td:not(:first-child):not(:last-child) {
+    width: auto;
   }
   
   .expense-item {
@@ -214,5 +298,40 @@ li {
   
   .expense-item button {
     margin-top: 5px;
+  }
+  
+  /* Уменьшаем размер кнопок в таблице */
+  table button {
+    padding: 5px 8px;
+    font-size: 0.9em;
+  }
+  
+  /* Уменьшаем размер шрифта в заголовке таблицы */
+  table th {
+    font-size: 0.9em;
+  }
+}
+
+/* Дополнительные стили для очень маленьких экранов */
+@media (max-width: 360px) {
+  table th, table td {
+    padding: 4px 2px;
+    font-size: 0.8em;
+  }
+  
+  .container {
+    padding: 8px;
+  }
+  
+  /* Еще больше уменьшаем размер кнопок в таблице */
+  table button {
+    padding: 4px 6px;
+    font-size: 0.8em;
+  }
+  
+  /* Дополнительные стили для скроллбара */
+  .month-table-container::-webkit-scrollbar, 
+  .table-container::-webkit-scrollbar {
+    height: 4px;
   }
 }
