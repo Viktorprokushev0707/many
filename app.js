@@ -1,8 +1,8 @@
 // app.js
 
-// Основной компонент приложения
+// u041eu0441u043du043eu0432u043du043eu0439 u043au043eu043cu043fu043eu043du0435u043du0442 u043fu0440u0438u043bu043eu0436u0435u043du0438u044f
 function App() {
-  // Состояния приложения
+  // u0421u043eu0441u0442u043eu044fu043du0438u044f u043fu0440u0438u043bu043eu0436u0435u043du0438u044f
   const [initialized, setInitialized] = React.useState(false);
   const [salary, setSalary] = React.useState('');
   const [mandatoryExpenses, setMandatoryExpenses] = React.useState('');
@@ -11,11 +11,17 @@ function App() {
   const [activeView, setActiveView] = React.useState("daily");
   const [currentDayIndex, setCurrentDayIndex] = React.useState(0);
 
-  // Состояния для ввода расхода
+  // u0421u043eu0441u0442u043eu044fu043du0438u044f u0434u043bu044f u0432u0432u043eu0434u0430 u0440u0430u0441u0445u043eu0434u0430
   const [expenseAmount, setExpenseAmount] = React.useState('');
   const [expenseDesc, setExpenseDesc] = React.useState('');
 
-  // Инициализация Telegram WebApp и загрузка данных из localStorage
+  // u0424u0443u043du043au0446u0438u044f u0434u043bu044f u0441u043au0440u044bu0442u0438u044f u043au043bu0430u0432u0438u0430u0442u0443u0440u044b u043du0430 iOS
+  const hideKeyboard = () => {
+    // u0421u043eu0437u0434u0430u0435u043c u0432u0440u0435u043cu0435u043du043du044bu0439 input, u0444u043eu043au0443u0441u0438u0440u0443u0435u043cu0441u044f u043du0430 u043du0435u043c u0438 u0437u0430u0442u0435u043c u0443u0431u0438u0440u0430u0435u043c u0435u0433u043e
+    document.activeElement.blur();
+  };
+
+  // u0418u043du0438u0446u0438u0430u043bu0438u0437u0430u0446u0438u044f Telegram WebApp u0438 u0437u0430u0433u0440u0443u0437u043au0430 u0434u0430u043du043du044bu0445 u0438u0437 localStorage
   React.useEffect(() => {
     const saved = localStorage.getItem('budgetData');
     if (saved) {
@@ -26,18 +32,18 @@ function App() {
       setInitialized(true);
     }
     
-    // Инициализация Telegram WebApp
+    // u0418u043du0438u0446u0438u0430u043bu0438u0437u0430u0446u0438u044f Telegram WebApp
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
-      // Настройка основной кнопки Telegram
-      window.Telegram.WebApp.MainButton.setText('Готово');
+      // u041du0430u0441u0442u0440u043eu0439u043au0430 u043eu0441u043du043eu0432u043du043eu0439 u043au043du043eu043fu043au0438 Telegram
+      window.Telegram.WebApp.MainButton.setText('u0413u043eu0442u043eu0432u043e');
       window.Telegram.WebApp.MainButton.onClick(() => {
         window.Telegram.WebApp.close();
       });
     }
   }, []);
 
-  // Сохранение данных в localStorage при изменении
+  // u0421u043eu0445u0440u0430u043du0435u043du0438u0435 u0434u0430u043du043du044bu0445 u0432 localStorage u043fu0440u0438 u0438u0437u043cu0435u043du0435u043du0438u0438
   React.useEffect(() => {
     if (initialized) {
       const data = { salary, mandatoryExpenses, daysData };
@@ -45,26 +51,28 @@ function App() {
     }
   }, [salary, mandatoryExpenses, daysData, initialized]);
 
-  // Обработка отправки формы начальной настройки
+  // u041eu0431u0440u0430u0431u043eu0442u043au0430 u043eu0442u043fu0440u0430u0432u043au0438 u0444u043eu0440u043cu044b u043du0430u0447u0430u043bu044cu043du043eu0439 u043du0430u0441u0442u0440u043eu0439u043au0438
   const handleInitSubmit = (e) => {
     e.preventDefault();
+    hideKeyboard(); // u0421u043au0440u044bu0432u0430u0435u043c u043au043bu0430u0432u0438u0430u0442u0443u0440u0443 u043fu0440u0438 u043eu0442u043fu0440u0430u0432u043au0435 u0444u043eu0440u043cu044b
+    
     const sal = parseFloat(salary);
     const manEx = parseFloat(mandatoryExpenses);
     
-    // Валидация ввода
+    // u0412u0430u043bu0438u0434u0430u0446u0438u044f u0432u0432u043eu0434u0430
     if (isNaN(sal) || isNaN(manEx) || sal <= 0) {
-      alert("Введите корректные числовые значения.");
+      alert("u0412u0432u0435u0434u0438u0442u0435 u043au043eu0440u0440u0435u043au0442u043du044bu0435 u0447u0438u0441u043bu043eu0432u044bu0435 u0437u043du0430u0447u0435u043du0438u044f.");
       return;
     }
     
-    // Определение количества дней в месяце
+    // u041eu043fu0440u0435u0434u0435u043bu0435u043du0438u0435 u043au043eu043bu0438u0447u0435u0441u0442u0432u0430 u0434u043du0435u0439 u0432 u043cu0435u0441u044fu0446u0435
     let today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
     const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
     let startDay = 1;
     
-    // Если указана дата начала, используем её
+    // u0415u0441u043bu0438 u0443u043au0430u0437u0430u043du0430 u0434u0430u0442u0430 u043du0430u0447u0430u043bu0430, u0438u0441u043fu043eu043bu044cu0437u0443u0435u043c u0435u0451
     if (startDate) {
       const dateObj = new Date(startDate);
       startDay = dateObj.getDate();
@@ -72,63 +80,63 @@ function App() {
     
     const totalDays = lastDayOfMonth - startDay + 1;
     
-    // Расчет бюджета
+    // u0420u0430u0441u0447u0435u0442 u0431u044eu0434u0436u0435u0442u0430
     const cleanIncome = sal - manEx;
-    const savings = sal * 0.15; // 15% на сбережения
+    const savings = sal * 0.15; // 15% u043du0430 u0441u0431u0435u0440u0435u0436u0435u043du0438u044f
     const availableForLife = cleanIncome - savings;
     const baseDaily = availableForLife / totalDays;
 
-    // Инициализация массива дней
+    // u0418u043du0438u0446u0438u0430u043bu0438u0437u0430u0446u0438u044f u043cu0430u0441u0441u0438u0432u0430 u0434u043du0435u0439
     const days = [];
     for (let day = startDay; day <= lastDayOfMonth; day++) {
       days.push({
-        day,                   // номер дня
-        expenses: [],          // список расходов
-        baseDaily,             // базовый дневной лимит
-        available: baseDaily,  // доступная сумма с учетом переноса
-        calculated: 0          // остаток после расходов
+        day,                   // u043du043eu043cu0435u0440 u0434u043du044f
+        expenses: [],          // u0441u043fu0438u0441u043eu043a u0440u0430u0441u0445u043eu0434u043eu0432
+        baseDaily,             // u0431u0430u0437u043eu0432u044bu0439 u0434u043du0435u0432u043du043eu0439 u043bu0438u043cu0438u0442
+        available: baseDaily,  // u0434u043eu0441u0442u0443u043fu043du0430u044f u0441u0443u043cu043cu0430 u0441 u0443u0447u0435u0442u043eu043c u043fu0435u0440u0435u043du043eu0441u0430
+        calculated: 0          // u043eu0441u0442u0430u0442u043eu043a u043fu043eu0441u043bu0435 u0440u0430u0441u0445u043eu0434u043eu0432
       });
     }
     
-    // Пересчет с учетом переносов
+    // u041fu0435u0440u0435u0441u0447u0435u0442 u0441 u0443u0447u0435u0442u043eu043c u043fu0435u0440u0435u043du043eu0441u043eu0432
     const updatedDays = recalcDays(days);
     setDaysData(updatedDays);
     setInitialized(true);
     setActiveView("daily");
 
-    // Определение текущего дня
+    // u041eu043fu0440u0435u0434u0435u043bu0435u043du0438u0435 u0442u0435u043au0443u0449u0435u0433u043e u0434u043du044f
     const currentDay = today.getDate();
     let index = updatedDays.findIndex(d => d.day === currentDay);
     if (index === -1) index = 0;
     setCurrentDayIndex(index);
     
-    // Показываем кнопку Telegram
+    // u041fu043eu043au0430u0437u044bu0432u0430u0435u043c u043au043du043eu043fu043au0443 Telegram
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.MainButton.show();
     }
   };
 
-  // Функция пересчета баланса по дням
+  // u0424u0443u043du043au0446u0438u044f u043fu0435u0440u0435u0441u0447u0435u0442u0430 u0431u0430u043bu0430u043du0441u0430 u043fu043e u0434u043du044fu043c
   const recalcDays = (days) => {
     let carry = 0;
     return days.map(dayItem => {
       const availableToday = dayItem.baseDaily + carry;
       const spentToday = dayItem.expenses.reduce((sum, exp) => sum + exp.amount, 0);
       const remainder = availableToday - spentToday;
-      carry = remainder; // остаток переходит на следующий день
+      carry = remainder; // u043eu0441u0442u0430u0442u043eu043a u043fu0435u0440u0435u0445u043eu0434u0438u0442 u043du0430 u0441u043bu0435u0434u0443u044eu0449u0438u0439 u0434u0435u043du044c
       return { ...dayItem, available: availableToday, calculated: remainder };
     });
   };
 
-  // Добавление нового расхода
+  // u0414u043eu0431u0430u0432u043bu0435u043du0438u0435 u043du043eu0432u043eu0433u043e u0440u0430u0441u0445u043eu0434u0430
   const addExpense = () => {
     const amount = parseFloat(expenseAmount);
     if (isNaN(amount) || amount <= 0) {
-      alert("Введите корректную сумму расхода.");
+      alert("u0412u0432u0435u0434u0438u0442u0435 u043au043eu0440u0440u0435u043au0442u043du0443u044e u0441u0443u043cu043cu0443 u0440u0430u0441u0445u043eu0434u0430.");
       return;
     }
     
-    const newExpense = { id: Date.now(), amount, desc: expenseDesc || 'Расход' };
+    const newExpense = { id: Date.now(), amount, desc: expenseDesc || 'u0420u0430u0441u0445u043eu0434' };
     const updatedDays = daysData.map((day, idx) => {
       if (idx === currentDayIndex) {
         return { ...day, expenses: [...day.expenses, newExpense] };
@@ -140,9 +148,12 @@ function App() {
     setDaysData(recalculated);
     setExpenseAmount('');
     setExpenseDesc('');
+    
+    // u0421u043au0440u044bu0432u0430u0435u043c u043au043bu0430u0432u0438u0430u0442u0443u0440u0443 u043fu043eu0441u043bu0435 u0434u043eu0431u0430u0432u043bu0435u043du0438u044f u0440u0430u0441u0445u043eu0434u0430
+    hideKeyboard();
   };
 
-  // Удаление расхода
+  // u0423u0434u0430u043bu0435u043du0438u0435 u0440u0430u0441u0445u043eu0434u0430
   const removeExpense = (dayIndex, expenseId) => {
     const updatedDays = daysData.map((day, idx) => {
       if (idx === dayIndex) {
@@ -155,9 +166,9 @@ function App() {
     setDaysData(recalculated);
   };
 
-  // Сброс данных и начало заново
+  // u0421u0431u0440u043eu0441 u0434u0430u043du043du044bu0445 u0438 u043du0430u0447u0430u043bu043e u0437u0430u043du043eu0432u043e
   const resetBudget = () => {
-    if (window.confirm('Вы уверены, что хотите сбросить все данные и начать заново?')) {
+    if (window.confirm('u0412u044b u0443u0432u0435u0440u0435u043du044b, u0447u0442u043e u0445u043eu0442u0438u0442u0435 u0441u0431u0440u043eu0441u0438u0442u044c u0432u0441u0435 u0434u0430u043du043du044bu0435 u0438 u043du0430u0447u0430u0442u044c u0437u0430u043du043eu0432u043e?')) {
       localStorage.removeItem('budgetData');
       setSalary('');
       setMandatoryExpenses('');
@@ -171,61 +182,73 @@ function App() {
     }
   };
 
-  // Расчет прогресса расходов для прогресс-бара
+  // u0420u0430u0441u0447u0435u0442 u043fu0440u043eu0433u0440u0435u0441u0441u0430 u0440u0430u0441u0445u043eu0434u043eu0432 u0434u043bu044f u043fu0440u043eu0433u0440u0435u0441u0441-u0431u0430u0440u0430
   const calculateProgress = (available, spent) => {
     if (available <= 0) return 100;
     const progress = (spent / available) * 100;
     return Math.min(progress, 100);
   };
 
-  // Определение класса для прогресс-бара в зависимости от прогресса
+  // u041eu043fu0440u0435u0434u0435u043bu0435u043du0438u0435 u043au043bu0430u0441u0441u0430 u0434u043bu044f u043fu0440u043eu0433u0440u0435u0441u0441-u0431u0430u0440u0430 u0432 u0437u0430u0432u0438u0441u0438u043cu043eu0441u0442u0438 u043eu0442 u043fu0440u043eu0433u0440u0435u0441u0441u0430
   const getProgressClass = (progress) => {
     if (progress >= 100) return 'danger';
     if (progress >= 80) return 'warning';
     return '';
   };
 
-  // Если не выполнена начальная настройка - показываем форму настройки
+  // u0424u0443u043du043au0446u0438u044f u043eu0431u0440u0430u0431u043eu0442u043au0438 u043du0430u0436u0430u0442u0438u044f Enter u0432 u043fu043eu043bu044fu0445 u0432u0432u043eu0434u0430
+  const handleKeyPress = (e, callback) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      hideKeyboard();
+      if (callback) callback();
+    }
+  };
+
+  // u0415u0441u043bu0438 u043du0435 u0432u044bu043fu043eu043bu043du0435u043du0430 u043du0430u0447u0430u043bu044cu043du0430u044f u043du0430u0441u0442u0440u043eu0439u043au0430 - u043fu043eu043au0430u0437u044bu0432u0430u0435u043c u0444u043eu0440u043cu0443 u043du0430u0441u0442u0440u043eu0439u043au0438
   if (!initialized) {
     return (
       <div className="container">
-        <h2>Настройка бюджета</h2>
+        <h2>u041du0430u0441u0442u0440u043eu0439u043au0430 u0431u044eu0434u0436u0435u0442u0430</h2>
         <form onSubmit={handleInitSubmit}>
           <div>
-            <label>Месячный доход:</label>
+            <label>u041cu0435u0441u044fu0447u043du044bu0439 u0434u043eu0445u043eu0434:</label>
             <input
               type="number"
               value={salary}
               onChange={(e) => setSalary(e.target.value)}
-              placeholder="Введите сумму"
+              placeholder="u0412u0432u0435u0434u0438u0442u0435 u0441u0443u043cu043cu0443"
               required
+              onKeyPress={(e) => handleKeyPress(e)}
             />
           </div>
           <div>
-            <label>Обязательные расходы:</label>
+            <label>u041eu0431u044fu0437u0430u0442u0435u043bu044cu043du044bu0435 u0440u0430u0441u0445u043eu0434u044b:</label>
             <input
               type="number"
               value={mandatoryExpenses}
               onChange={(e) => setMandatoryExpenses(e.target.value)}
-              placeholder="Аренда, коммунальные услуги и т.д."
+              placeholder="u0410u0440u0435u043du0434u0430, u043au043eu043cu043cu0443u043du0430u043bu044cu043du044bu0435 u0443u0441u043bu0443u0433u0438 u0438 u0442.u0434."
               required
+              onKeyPress={(e) => handleKeyPress(e)}
             />
           </div>
           <div>
-            <label>Дата начала (необязательно):</label>
+            <label>u0414u0430u0442u0430 u043du0430u0447u0430u043bu0430 (u043du0435u043eu0431u044fu0437u0430u0442u0435u043bu044cu043du043e):</label>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+              onKeyPress={(e) => handleKeyPress(e)}
             />
           </div>
-          <button type="submit">Рассчитать бюджет</button>
+          <button type="submit">u0420u0430u0441u0441u0447u0438u0442u0430u0442u044c u0431u044eu0434u0436u0435u0442</button>
         </form>
       </div>
     );
   }
 
-  // Режим ежедневного учета
+  // u0420u0435u0436u0438u043c u0435u0436u0435u0434u043du0435u0432u043du043eu0433u043e u0443u0447u0435u0442u0430
   if (activeView === "daily") {
     const todayData = daysData[currentDayIndex];
     const spentToday = todayData.expenses.reduce((sum, exp) => sum + exp.amount, 0);
@@ -235,19 +258,19 @@ function App() {
     return (
       <div className="container">
         <div className="header-buttons">
-          <button onClick={() => setActiveView("monthly")}>Таблица месяца</button>
-          <button onClick={resetBudget}>Сбросить</button>
+          <button onClick={() => setActiveView("monthly")}>u0422u0430u0431u043bu0438u0446u0430 u043cu0435u0441u044fu0446u0430</button>
+          <button onClick={resetBudget}>u0421u0431u0440u043eu0441u0438u0442u044c</button>
         </div>
         
-        <h2>День {todayData.day}</h2>
+        <h2>u0414u0435u043du044c {todayData.day}</h2>
         
         <div className="summary-box">
-          <p>Базовый дневной лимит: {todayData.baseDaily.toFixed(2)} ₽</p>
-          <p>Доступно сегодня (с учетом переноса): {todayData.available.toFixed(2)} ₽</p>
-          <p>Потрачено сегодня: {spentToday.toFixed(2)} ₽</p>
+          <p>u0411u0430u0437u043eu0432u044bu0439 u0434u043du0435u0432u043du043eu0439 u043bu0438u043cu0438u0442: {todayData.baseDaily.toFixed(2)} u20bd</p>
+          <p>u0414u043eu0441u0442u0443u043fu043du043e u0441u0435u0433u043eu0434u043du044f (u0441 u0443u0447u0435u0442u043eu043c u043fu0435u0440u0435u043du043eu0441u0430): {todayData.available.toFixed(2)} u20bd</p>
+          <p>u041fu043eu0442u0440u0430u0447u0435u043du043e u0441u0435u0433u043eu0434u043du044f: {spentToday.toFixed(2)} u20bd</p>
           <p className={todayData.calculated < 0 ? "negative-balance" : ""}>
-            Остаток: {todayData.calculated.toFixed(2)} ₽
-            {todayData.calculated < 0 && " (Превышение лимита!)"}
+            u041eu0441u0442u0430u0442u043eu043a: {todayData.calculated.toFixed(2)} u20bd
+            {todayData.calculated < 0 && " (u041fu0440u0435u0432u044bu0448u0435u043du0438u0435 u043bu0438u043cu0438u0442u0430!)"}
           </p>
           
           <div className="progress-bar">
@@ -258,37 +281,39 @@ function App() {
           </div>
         </div>
 
-        <h3>Расходы:</h3>
+        <h3>u0420u0430u0441u0445u043eu0434u044b:</h3>
         <div className="expense-list">
           {todayData.expenses.length === 0 ? (
-            <p>Расходы отсутствуют</p>
+            <p>u0420u0430u0441u0445u043eu0434u044b u043eu0442u0441u0443u0442u0441u0442u0432u0443u044eu0442</p>
           ) : (
             todayData.expenses.map(exp => (
               <div className="expense-item" key={exp.id}>
                 <div>
-                  <strong>{exp.desc}</strong> — {exp.amount.toFixed(2)} ₽
+                  <strong>{exp.desc}</strong> u2014 {exp.amount.toFixed(2)} u20bd
                 </div>
-                <button onClick={() => removeExpense(currentDayIndex, exp.id)}>Удалить</button>
+                <button onClick={() => removeExpense(currentDayIndex, exp.id)}>u0423u0434u0430u043bu0438u0442u044c</button>
               </div>
             ))
           )}
         </div>
 
         <div className="expense-input">
-          <h4>Добавить расход</h4>
+          <h4>u0414u043eu0431u0430u0432u0438u0442u044c u0440u0430u0441u0445u043eu0434</h4>
           <input
             type="number"
-            placeholder="Сумма"
+            placeholder="u0421u0443u043cu043cu0430"
             value={expenseAmount}
             onChange={(e) => setExpenseAmount(e.target.value)}
+            onKeyPress={(e) => handleKeyPress(e)}
           />
           <input
             type="text"
-            placeholder="Описание (например, обед, кофе)"
+            placeholder="u041eu043fu0438u0441u0430u043du0438u0435 (u043du0430u043fu0440u0438u043cu0435u0440, u043eu0431u0435u0434, u043au043eu0444u0435)"
             value={expenseDesc}
             onChange={(e) => setExpenseDesc(e.target.value)}
+            onKeyPress={(e) => handleKeyPress(e, expenseAmount ? addExpense : null)}
           />
-          <button onClick={addExpense}>Добавить</button>
+          <button onClick={addExpense}>u0414u043eu0431u0430u0432u0438u0442u044c</button>
         </div>
 
         <div className="navigation">
@@ -296,39 +321,39 @@ function App() {
             disabled={currentDayIndex <= 0}
             onClick={() => setCurrentDayIndex(currentDayIndex - 1)}
           >
-            Предыдущий день
+            u041fu0440u0435u0434u044bu0434u0443u0449u0438u0439 u0434u0435u043du044c
           </button>
           <button
             disabled={currentDayIndex >= daysData.length - 1}
             onClick={() => setCurrentDayIndex(currentDayIndex + 1)}
           >
-            Следующий день
+            u0421u043bu0435u0434u0443u044eu0449u0438u0439 u0434u0435u043du044c
           </button>
         </div>
       </div>
     );
   }
 
-  // Режим таблицы месяца
+  // u0420u0435u0436u0438u043c u0442u0430u0431u043bu0438u0446u044b u043cu0435u0441u044fu0446u0430
   if (activeView === "monthly") {
     return (
       <div className="container">
         <div className="header-buttons">
-          <button onClick={() => setActiveView("daily")}>Ежедневный режим</button>
-          <button onClick={resetBudget}>Сбросить</button>
+          <button onClick={() => setActiveView("daily")}>u0415u0436u0435u0434u043du0435u0432u043du044bu0439 u0440u0435u0436u0438u043c</button>
+          <button onClick={resetBudget}>u0421u0431u0440u043eu0441u0438u0442u044c</button>
         </div>
         
-        <h2>Таблица месяца</h2>
+        <h2>u0422u0430u0431u043bu0438u0446u0430 u043cu0435u0441u044fu0446u0430</h2>
         
         <table>
           <thead>
             <tr>
-              <th>День</th>
-              <th>Лимит (₽)</th>
-              <th>Доступно (₽)</th>
-              <th>Расходы (₽)</th>
-              <th>Остаток (₽)</th>
-              <th>Действия</th>
+              <th>u0414u0435u043du044c</th>
+              <th>u041bu0438u043cu0438u0442 (u20bd)</th>
+              <th>u0414u043eu0441u0442u0443u043fu043du043e (u20bd)</th>
+              <th>u0420u0430u0441u0445u043eu0434u044b (u20bd)</th>
+              <th>u041eu0441u0442u0430u0442u043eu043a (u20bd)</th>
+              <th>u0414u0435u0439u0441u0442u0432u0438u044f</th>
             </tr>
           </thead>
           <tbody>
@@ -346,7 +371,7 @@ function App() {
                       setCurrentDayIndex(idx);
                       setActiveView("daily");
                     }}>
-                      Подробнее
+                      u041fu043eu0434u0440u043eu0431u043du0435u0435
                     </button>
                   </td>
                 </tr>
@@ -358,8 +383,8 @@ function App() {
     );
   }
 
-  return <div>Непредвиденная ситуация.</div>;
+  return <div>u041du0435u043fu0440u0435u0434u0432u0438u0434u0435u043du043du0430u044f u0441u0438u0442u0443u0430u0446u0438u044f.</div>;
 }
 
-// Рендерим приложение
+// u0420u0435u043du0434u0435u0440u0438u043c u043fu0440u0438u043bu043eu0436u0435u043du0438u0435
 ReactDOM.render(<App />, document.getElementById('root'));

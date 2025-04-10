@@ -5,6 +5,9 @@ body {
   padding: 0;
   background-color: var(--tg-theme-bg-color, #f5f5f5);
   color: var(--tg-theme-text-color, #222);
+  /* Предотвращаем масштабирование на iOS при фокусе на поля ввода */
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
 }
 
 .container {
@@ -41,6 +44,11 @@ input[type="text"] {
   background-color: var(--tg-theme-bg-color, #fff);
   color: var(--tg-theme-text-color, #222);
   box-sizing: border-box;
+  /* u0423u043bu0443u0447u0448u0435u043du0438u044f u0434u043bu044f u043cu043eu0431u0438u043bu044cu043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px; /* u041fu0440u0435u0434u043eu0442u0432u0440u0430u0449u0430u0435u0442 u043cu0430u0441u0448u0442u0430u0431u0438u0440u043eu0432u0430u043du0438u0435 u043du0430 iOS */
 }
 
 button {
