@@ -1,0 +1,16 @@
+{
+  "name": "u0411u044eu0434u0436u0435u0442 u043du0430 u043cu0435u0441u044fu0446",
+  "short_name": "u0411u044eu0434u0436u0435u0442",
+  "description": "u041fu0440u0438u043bu043eu0436u0435u043du0438u0435 u0434u043bu044f u0432u0435u0434u0435u043du0438u044f u0435u0436u0435u0434u043du0435u0432u043du043eu0433u043e u0431u044eu0434u0436u0435u0442u0430",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3390ec",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
